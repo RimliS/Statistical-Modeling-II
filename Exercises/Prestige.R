@@ -1,6 +1,6 @@
 
 #Reading data
-adata <- read.table("/Users/rimlisengupta/Dropbox/SDS383D-StatMod2/prestige.txt", fill = TRUE, header=TRUE)
+adata <- read.table("/Users/rimlisengupta/Dropbox/UT Austin/Spring 2018/SDS383D-StatMod2/prestige.txt", fill = TRUE, header=TRUE)
 
 #Getting rid of categorical variable
 prestige = adata[,1:5]
@@ -21,12 +21,10 @@ final <- final[,-1]
 mod <- lm(income ~ education+women+prestige, data=final)
 summary(mod)
 
-#Coefficients:
-#            Estimate  Std. Error  t value    Pr(>|t|)    
-#(Intercept)   6797.9    254.9     26.665     < 2e-16 ***
-#education     483.5     511.9      0.944       0.347    
-#women        -1614.7    271.4     -5.948       4.19e-08 ***
-#prestige      2433.3    514.6      4.729       7.58e-06 ***
+se <- sqrt(diag(vcov(mod)))
+#sd1=2575
+
+#Residual standard error: 2575 on 98 degrees of freedom
 
 #sigma^2 unknown
 beta0 <- rep(1,102) #Define intercept column
@@ -47,6 +45,8 @@ C=diag(102)-M
 e.sq=as.vector(t(y)%*%C%*%y)
 
 sigma.hat.sq=e.sq/(102-4)
+sd2=sqrt(sigma.hat.sq)
+#2574.709
 
 #variance of least square:
 var.beta=sigma.hat.sq*B
